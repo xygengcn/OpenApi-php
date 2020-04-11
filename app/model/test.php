@@ -28,7 +28,7 @@ class test
         //DB("test")->where(["id", ">", "10"], ["id", ">", "10"])->select()
         //DB("test")->where(["id", ">", "10"])->select()
         //DB("test")->where("id", ">", "10")->select()
-        _e(DB("test")->or(["id", "=", "80"], ["id", "=", "79"])->select("name", "id"));
+        //_e(DB("test")->or(["id", "=", "80"], ["id", "=", "81"])->select("name", "id"));
 
         //更新
         //DB("test")->where("id", "=", "77")->updata(["remark", "88"]);

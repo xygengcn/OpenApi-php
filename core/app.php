@@ -1,63 +1,42 @@
 <?php
-use \core\Exception\SystemException as SystemException;
+use \core\controller\Controller as Controller;
 use \core\lib\route\route as route;
 
 class app
 {
     public static function run()
     {
-        $a = $_SERVER['REQUEST_URI'];
-        $route = route::isRoute($a);
+        //路由参数
+        $urlParam = urlParams();
+        //函数参数
+        $methodParams = [];
+        //遍历已定义的路由
+        $route = route::run($urlParam);
         if ($route) {
-            $params = explode('@', trim($route));
-            $count = count($params);
+            $params = explode('@', trim($route[0]));
             $controller = $params[0];
             $method = $params[1];
-
+            $methodParams = $route[1];
         } else {
-            $uri = rtrim(preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']), '/');
-            $params = explode('/', trim($uri, '/'));
-            $count = count($params);
-            if ($count == 1 && $params[0] == "") {
+            $count = count($urlParam);
+            if ($count == 1 && $urlParam[0] == "") {
                 display("index.html");
             }
-            if (preg_match("/^.*\.html$/", $params[$count - 1])) {
+            if (preg_match("/^.*\.html$/", $urlParam[$count - 1])) {
                 display($a);
             }
             if ($count > 1) {
-                $controller = $params[0];
-                $method = $params[1];
-            } elseif ($count == 1 && $params[0] != "") {
-                $controller = 'index';
-                $method = $params[0];
+                $controller = $urlParam[0];
+                $method = $urlParam[1];
+                $methodParams = array_splice($urlParam, 2, $count - 2);
+            } elseif ($count == 1 && $urlParam[0] != "") {
+                $controller = $urlParam[0];
+                $method = "index";
             } else {
                 die();
             }
-        }
-        $filename = __ROOT__ . '\app\controller\\' . $controller . '.php';
-        $controller = '\app\controller\\' . $controller;
-        try {
-            if (!file_exists($filename)) {
-                throw new SystemException('控制器:' . $controller . ' 未定义', 500);
-                return;
-            }
-            include_once $filename;
-            if (!class_exists($controller, false)) {
-                throw new SystemException('类:' . $controller . ' 未定义', 500);
-                return;
-            }
-            $obj = new \ReflectionClass($controller);
-            if (!$obj->hasMethod($method)) {
-                throw new SystemException('函数:' . $method . ' 未定义', 500);
-                return;
-            }
-
-        } catch (SystemException $e) {
-            $e->output($e);
 
         }
-        $class = new $controller();
-        call_user_func_array(array($class, $method), $params);
-
+        Controller::run($controller, $method, $methodParams);
     }
 }

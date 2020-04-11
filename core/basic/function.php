@@ -72,13 +72,22 @@ function timestamp()
 /**
  * 加引号
  */
-function markString($str)
+function str_rl($str, $n = 1, $char = "'")
 {
-
-    return "'" . $str . "'";
+    return str_suffix(str_prefix($str, $n, $char), $n, $char);
+}
+function str_prefix($str, $n = 1, $char = " ")
+{
+    for ($x = 0; $x < $n; $x++) {$str = $char . $str;}
+    return $str;
+}
+function str_suffix($str, $n = 1, $char = " ")
+{
+    for ($x = 0; $x < $n; $x++) {$str = $str . $char;}
+    return $str;
 }
 /**
- *
+ *显示界面，需要在public新建
  */
 function display($html)
 {
@@ -90,9 +99,16 @@ function display($html)
         header("Location:" . '\public\error\404.html');exit;
     }
 }
+//获取域名加协议
 function site_url()
 {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $domainName = $_SERVER['HTTP_HOST'];
     return $protocol . $domainName;
+}
+//获取网址参数数组
+function urlParams()
+{
+    $urlParam = rtrim(preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']), '/');
+    return explode('/', trim($urlParam, '/'));
 }

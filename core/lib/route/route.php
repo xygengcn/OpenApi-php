@@ -15,13 +15,25 @@ class route
     {
         $this->routes = \core\basic\data::getRoutes();
     }
+    public static function run($urlParam)
+    {
+        $route = "/";
+        foreach ($urlParam as $key => $val) {
+            $route .= $val;
+            if ($class = self::isRoute($route)) {
+                $param = array_values(array_splice($urlParam, $key + 1, count($urlParam) - $key - 1));
+                return [$class, $param];
+            }
+            $route .= "/";
+        }
+        return false;
 
+    }
     public static function isRoute($route)
     {
         $obj = new self();
-        $obj->route = rtrim($route, "/");
-        if (array_key_exists($obj->route, $obj->routes)) {
-            return $obj->routes[$obj->route];
+        if (array_key_exists($route, $obj->routes)) {
+            return $obj->routes[$route];
         }
     }
 

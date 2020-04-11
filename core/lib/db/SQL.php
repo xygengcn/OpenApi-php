@@ -44,7 +44,7 @@ class SQL
                 $valueArr = [];
                 foreach ($index as $key => $value) {
                     $keyArr[] = $key;
-                    $valueArr[] = markString($value);
+                    $valueArr[] = str_rl($value);
                 }
                 $sql[] = $this->insert . $this->table . " (" . implode($keyArr, ",") . ")" . $this->value . "(" . implode($valueArr, ",") . ");   ";
             }
@@ -81,13 +81,13 @@ class SQL
         }
         if (is_array($arr[0])) {
             foreach ($arr as $val) {
-                $str[] = $val[0] . $this->space . "=" . $this->space . markString($val[1]);
+                $str[] = $val[0] . $this->space . "=" . $this->space . str_rl($val[1]);
             }
             return $this->updata . $this->table . $this->set . implode(" , ", $str) . $this->where;
 
         } else {
             if (count($arr) == 2) {
-                return $this->updata . $this->table . $this->set . $arr[0] . $this->space . "=" . $this->space . markString($arr[1]) . $this->where;
+                return $this->updata . $this->table . $this->set . $arr[0] . $this->space . "=" . $this->space . str_rl($arr[1]) . $this->where;
             } else {
                 error("updata参数格式不对");
             }
@@ -127,6 +127,6 @@ class SQL
 
     public function stringJoin($arr)
     {
-        return $arr[0] . $this->space . $arr[1] . $this->space . markString($arr[2]) . $this->space;
+        return $arr[0] . $this->space . $arr[1] . $this->space . str_rl($arr[2]) . $this->space;
     }
 }

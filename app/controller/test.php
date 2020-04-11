@@ -1,19 +1,23 @@
 <?php
-
 namespace app\controller;
 
-/**控制器需要命名 controller__ +名字*/
-/**组件不需要，需要引用use  \app\model\+名字*/
 /**
- * 请保持model文件名和类名一致
+ * 请保持文件名和类名一致
+ *
+ * 组件引用use  \app\model\+名字
+ * \app\model\test::test();
+ *
  */
 
 class test
 {
-    public function write($controller, $method)
+    public function index()
     {
-        \app\model\test::test();
+        echo "123";
+    }
 
-        //response($method);
+    public function test($key)
+    {
+        echo $key;
     }
 }
