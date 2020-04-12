@@ -59,7 +59,7 @@ class test
 
 路由默认先遍历路由模板，若无再执行基本路由
 
-#### 基本路由：
+#### 基本路由
 
 ```
 http://YourDomain.com/控制器名/函数名/[参数]/[参数]...
@@ -67,7 +67,7 @@ http://YourDomain.com/控制器名/函数名/[参数]/[参数]...
 http://YourDomain.com/控制器名  =>默认 函数名是index，执行控制器的index()函数
 ```
 
-#### 路由模板：
+#### 路由模板
 
 ```
 http://YourDomain.com/路由名/[参数]/[参数]...

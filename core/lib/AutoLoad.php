@@ -5,18 +5,17 @@ class AutoLoad
     //找到对应文件就include
     public static function _autoLoad($name)
     {
-        $_map = require __ROOT__ . '/core/map.php';
+        $_map = maps();
+
         $explode = explode('\\', $name);
-        $class = $explode[count($explode) - 1];
+        $class = end($explode);
         if (isset($_map[$class])) {
             return include_once $_map[$class];
         }
-        $file = self::filepath($name);
-        if ($file) {
-
-            include_once $file;
-            return 0;
+        if ($file = self::filepath($name)) {
+            return include_once $file;
         }
+        error($name . "文件引入错误");
     }
     public static function filepath($name, $ext = '.php')
     {
@@ -50,4 +49,4 @@ class AutoLoad
         }
     }
 }
-spl_autoload_register($namespace . 'AutoLoad::_autoLoad');
+spl_autoload_register('AutoLoad::_autoLoad');

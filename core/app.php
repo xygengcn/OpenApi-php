@@ -2,7 +2,7 @@
 use \core\controller\Controller as Controller;
 use \core\lib\route\route as route;
 
-class app
+class App
 {
     public static function run()
     {
@@ -20,7 +20,7 @@ class app
         } else {
             $count = count($urlParam);
             if ($count == 1 && $urlParam[0] == "") {
-                display("index.html");
+                display();
             }
             if (preg_match("/^.*\.html$/", $urlParam[$count - 1])) {
                 display($a);
@@ -32,10 +32,7 @@ class app
             } elseif ($count == 1 && $urlParam[0] != "") {
                 $controller = $urlParam[0];
                 $method = "index";
-            } else {
-                die();
             }
-
         }
         Controller::run($controller, $method, $methodParams);
     }

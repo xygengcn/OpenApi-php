@@ -39,7 +39,10 @@ function error($error = "未知错误", $code = 404)
 {
     die(json_encode(array("code" => $code, "error" => $error)));
 }
-
+function maps()
+{
+    return require __ROOT__ . "/core/map/map.php";
+}
 function config($configName)
 {
 
@@ -89,7 +92,7 @@ function str_suffix($str, $n = 1, $char = " ")
 /**
  *显示界面，需要在public新建
  */
-function display($html)
+function display($html = "index.html")
 {
     $url = site_url() . '/' . $html;
     $file = __ROOT__ . '\public\\' . $html;
