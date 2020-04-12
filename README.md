@@ -185,6 +185,16 @@ or语句
 DB("test")->or(["id", "=", "80"], ["id", "=", "81"])->select()
 ```
 
+orderby 语句
+
+```php
+#单个，默认升序ASC
+DB("test")->where("id", ">", "80")->order('id DESC')->select()
+
+#多个参数，设置倒序
+DB("test")->order('id DESC',"...")->select()
+```
+
 
 
 ### 更新记录

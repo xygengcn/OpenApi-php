@@ -13,7 +13,7 @@ class test
 {
     public function index()
     {
-        echo "123";
+        \app\model\test::test();
     }
 
     public function test($key)

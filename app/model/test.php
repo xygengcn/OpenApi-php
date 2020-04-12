@@ -23,7 +23,6 @@ class test
         //DB("test")->where(["id", "=", "75"])->delete();
 
         //查询
-        // DB("test")->select();
         //DB("test")->select("id", "name")
         //DB("test")->where(["id", ">", "10"], ["id", ">", "10"])->select()
         //DB("test")->where(["id", ">", "10"])->select()
@@ -33,6 +32,10 @@ class test
         //更新
         //DB("test")->where("id", "=", "77")->updata(["remark", "88"]);
         //DB("test")->where("id", "=", "77")->updata(["remark", "88"],['name','88']);
+
+        _e(DB("test")->where("id", ">", "80")->order('id DESC')->select());
+
+        //
 
     }
 }

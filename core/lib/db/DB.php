@@ -59,4 +59,11 @@ class DB extends \core\lib\db\MySQL
         // echo $this->sql->updata(func_get_args());
         return $this->pdoExec($this->sql->updata(func_get_args()));
     }
+
+    public function order()
+    {
+
+        $this->sql->order(func_get_args());
+        return $this;
+    }
 }

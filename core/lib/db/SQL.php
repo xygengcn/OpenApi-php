@@ -14,6 +14,7 @@ class SQL
 
     private $key = "*";
     private $where = "";
+    private $order = "";
 
     private $table = "";
 
@@ -31,7 +32,7 @@ class SQL
         if (func_get_args() != [[]]) {
             $this->key = implode(array_reduce(func_get_args(), 'array_merge', array()), ",");
         }
-        return $this->select . $this->key . $this->from . $this->table . $this->where;
+        return $this->select . $this->key . $this->from . $this->table . $this->where . $this->order;
     }
     /**
      * 插入
@@ -128,5 +129,16 @@ class SQL
     public function stringJoin($arr)
     {
         return $arr[0] . $this->space . $arr[1] . $this->space . str_rl($arr[2]) . $this->space;
+    }
+
+    /**
+     * order
+     */
+    public function order($arr)
+    {
+        if ($arr != []) {
+            $this->order = " ORDER BY " . implode(",", $arr);
+        }
+
     }
 }
