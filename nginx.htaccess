@@ -1,4 +1,4 @@
-location ~* .(jpg|gif|png|js|css|bmp|PNG|JGP|jpge)$ {
+location ~* .(jpg|gif|png|js|css|bmp|PNG|JGP|jpge|ico)$ {
 	if (!-e $request_filename) {
     	rewrite (.*) /public$1 break;
 	}
@@ -7,10 +7,13 @@ location / {
 	if (-f $request_filename/public/index.html){ 
 		rewrite (.*) /public$1/index.html break; 
 	}
+	rewrite ^(.*).php$ /index.php?/$1 last;
 	if (!-e $request_filename) {
+		rewrite ^/(.*)index.html/(.*).md$ /public/$1$2.md break;
 		rewrite ^/(.*).html(.*)$ /public/$1.html$2 break;
 		rewrite ^/index.php(.*)$ /index.php?s=$1 last;
 		rewrite ^(.*)$ /index.php?s=$1 last;
 		break;
 	}  
 }
+

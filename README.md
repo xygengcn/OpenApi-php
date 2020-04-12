@@ -92,6 +92,24 @@ http://YourDomain.com/test/123/123
 
 ### 数据库操作
 
+
+
+#### 数据库连接
+
+在app\config的database文件设置数据库连接信息
+
+```php
+return array(
+    "db_Type" => "mysql", //只支持mysql
+    "host" => "localhost:3306", //数据库地址加端口
+    "dbName" => "api", //数据库名
+    "userName" => "root", //用户名
+    "password" => "root", //密码
+);
+```
+
+
+
 #### 插入数据
 
 单条插入数据
@@ -200,3 +218,5 @@ DB("test")->order('id DESC',"...")->select()
 ### 更新记录
 
 1. 2020-04-11 上传项目
+2. 2020-04-12 增加bing每日一图接口
+3. 2020-04-13 增加测试API平台

@@ -25,6 +25,9 @@ class App
             if (preg_match("/^.*\.html$/", $urlParam[$count - 1])) {
                 display($a);
             }
+            if (preg_match("/^.*\.php$/", $urlParam[$count - 1])) {
+                display($a);
+            }
             if ($count > 1) {
                 $controller = $urlParam[0];
                 $method = $urlParam[1];

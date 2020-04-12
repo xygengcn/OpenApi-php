@@ -13,7 +13,7 @@ class test
 {
     public function index()
     {
-        \app\model\test::test();
+        display("test.html");
     }
 
     public function test($key)
