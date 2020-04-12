@@ -17,17 +17,17 @@ class route
     }
     public static function run($urlParam)
     {
-        $route = "/";
-        foreach ($urlParam as $key => $val) {
-            $route .= $val;
+        $route = "";
+        $param = [];
+        $count = count($urlParam);
+        for ($i = 0; $i < $count; $i++) {
+            $route = "/" . implode("/", $urlParam);
             if ($class = self::isRoute($route)) {
-                $param = array_values(array_splice($urlParam, $key + 1, count($urlParam) - $key - 1));
                 return [$class, $param];
             }
-            $route .= "/";
+            array_unshift($param, array_pop($urlParam));
         }
         return false;
-
     }
     public static function isRoute($route)
     {
