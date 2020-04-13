@@ -14,7 +14,7 @@ class one
     public function index()
     {
 
-        //response(DB('one')->limit(10)->select());
+        response(DB('one')->rand(1)->select("id", "tag", "origin", "content", "datetime"));
 
     }
     public function js()

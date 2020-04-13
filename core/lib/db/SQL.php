@@ -174,8 +174,8 @@ class SQL
     public function rand($limit, $row)
     {
 
-        $this->join(" AS t1 JOIN (SELECT ROUND(RAND() * ((" . $this->select("MAX(" . str_clean($row) . ")") . ")-(" . $this->select("MIN(" . str_clean($row) . ")") . "))+(" . $this->select("MIN(" . str_clean($row) . ")") . ")) AS id) AS t2");
-        $this->where("t1." . str_clean($row) . ">=t2." . str_clean($row));
+        $this->join(" AS t1 JOIN (SELECT ROUND(RAND() * ((" . $this->select("MAX(" . str_clean($row) . ")") . ")-(" . $this->select("MIN(" . str_clean($row) . ")") . "))+(" . $this->select("MIN(" . str_clean($row) . ")") . ")) AS sid) AS t2");
+        $this->where("t1." . str_clean($row) . ">=t2.s" . str_clean($row));
         $this->limit([$limit]);
         $this->order(["t1." . str_clean($row)]);
     }

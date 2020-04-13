@@ -31,7 +31,7 @@ class DB extends \core\lib\db\MySQL
     }
     public function select()
     {
-        // echo $this->sql->select(func_get_args());
+        //echo $this->sql->select(func_get_args());
         return $this->pdoSelect($this->sql->select(func_get_args()));
 
     }
