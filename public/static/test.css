@@ -1,0 +1,79 @@
+pre {
+    background-color: #333333;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: #ccc;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+section.cover.show {
+    background: linear-gradient(to left bottom, hsl(209, 100%, 85%) 0%, hsl(154, 100%, 85%) 100%);
+}
+
+pre.result {
+    height: 500px;
+    padding: 10px 30px;
+    overflow: auto;
+}
+
+#main {
+    width: 1024px;
+    margin: 0px auto;
+    padding-top: 50px;
+}
+
+#main h1 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.div_input {
+    display: flex;
+    border: 1px solid #333;
+}
+
+.div_input label {
+    background: #333;
+    color: #fff;
+    box-sizing: border-box;
+    line-height: 40px;
+    padding: 0px 20px;
+
+}
+
+.div_input input {
+    font-size: 1.2em;
+    height: 40px;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+    flex: 1;
+    padding: 0px 20px;
+}
+
+#main .btnTest {
+    height: 40px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    margin: 15px 0px;
+    cursor: pointer;
+}

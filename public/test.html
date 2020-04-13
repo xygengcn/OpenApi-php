@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <title>OpenApi - XY笔记 - 开源API</title>
+    <link rel="stylesheet" href="static/vue.css">
+    <link rel="stylesheet" href="static/test.css">
+    <link rel="icon" href="public/favicon.ico">
+    <link rel="shortcut icon" href="public/favicon.ico" />
+    <link rel="bookmark" href="public/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="OpenApi - XY笔记 - 开源API">
+    <script src="static/test.js"></script>
+</head>
+
+<body class="ready">
+    <section class="cover show">
+        <div class="cover-main">
+            <h1><a href="#/" class="anchor"><span>XY笔记 - 开源API测试平台</span></a></h1>
+            <P>
+                <a href="https://github.com/xygengcn/OpenApi" target="_blank">Github</a>
+                <a href="#/main" onclick="scollAnimate('#main')">Get Started</a>
+            </P>
+        </div>
+
+    </section>
+    <main id="main">
+        <h1><a href="#/" class="anchor"><span>XY笔记 - 开源API测试平台</span></a></h1>
+        <div class="div_input"><label for="url">GET请求接口</label><input type="text" id="url" autocomplete="off"></div>
+        <div class="btnTest" onclick="test()">测试</div>
+        <pre class="result"><code id="result" class="language-json"></code></pre>
+    </main>
+</body>
+
+</html>
