@@ -16,8 +16,6 @@
 
 // print_r($arr2);
 
-$arr = ["fesf", "fsfe", "fsefe"];
+$arr = "215--64-*/65sfdsf.46ghft(hf)t--15/5,6";
 
-echo end($arr);
-
-print_r($arr);
+print_r(preg_replace('/[-\',\.\$\^\*-+!\?\/@"\|\\()]/i', "", $arr));

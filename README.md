@@ -4,6 +4,9 @@
 
 
 
+![](https://img.shields.io/badge/PHP->=7-<blue>.svg) ![](https://img.shields.io/badge/license-MIT-<blue>.svg) ![](https://img.shields.io/badge/Medoo-v1.6-<blue>.svg) ![](https://img.shields.io/badge/MySQL-v1.15.11-<blue>.svg)
+
+
 [TOC]
 
 
@@ -90,8 +93,7 @@ http://YourDomain.com/test/123/123
 将会对应访问：test类的index函数，传入(123,123)两个参数
 ```
 
-### 数据库操作
-
+### 内置数据库
 
 
 #### 数据库连接
@@ -99,13 +101,26 @@ http://YourDomain.com/test/123/123
 在app\config的database文件设置数据库连接信息
 
 ```php
-return array(
-    "db_Type" => "mysql", //只支持mysql
-    "host" => "localhost:3306", //数据库地址加端口
-    "dbName" => "api", //数据库名
-    "userName" => "root", //用户名
+return [
+    "database_type" => "mysql", //只支持mysql
+    "server" => "localhost", //数据库地址
+    "port" => 3306, //默认3306
+    "database_name" => "api", //数据库名
+    "username" => "root", //用户名
     "password" => "root", //密码
-);
+
+    //不了解下面勿动
+    'charset' => 'utf8',
+    'prefix' => '',
+    'logging' => true,
+    'socket' => '/tmp/mysql.sock',
+    'option' => [
+        PDO::ATTR_CASE => PDO::CASE_NATURAL,
+    ],
+    'command' => [
+        'SET SQL_MODE=ANSI_QUOTES',
+    ]
+];
 ```
 
 
@@ -213,10 +228,29 @@ DB("test")->where("id", ">", "80")->order('id DESC')->select()
 DB("test")->order('id DESC',"...")->select()
 ```
 
+limit 语句
+
+```php
+DB("test")->limit(0,1)->select()
+```
 
 
-### 更新记录
+### Medoo数据库
 
-1. 2020-04-11 上传项目
-2. 2020-04-12 增加bing每日一图接口
-3. 2020-04-13 增加测试API平台
+#### 基础操作
+
+在app\config的database文件设置数据库连接信息
+
+```php
+$db = Medoo();//获取对象，注意没有new
+
+//查询全表
+$db->select("test", "*");
+
+//查询个别
+$db->select("account", "user_name");
+```
+
+#### 高级用法
+
+[详细操作手册](https://medoo.lvtao.net/1.2/doc.php)

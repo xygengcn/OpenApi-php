@@ -33,9 +33,11 @@ class test
         //DB("test")->where("id", "=", "77")->updata(["remark", "88"]);
         //DB("test")->where("id", "=", "77")->updata(["remark", "88"],['name','88']);
 
-        _e(DB("test")->where("id", ">", "80")->order('id DESC')->select());
+        //_e(DB("test")->where("id", ">", "80")->order('id DESC')->select());
 
-        //
+        //medoo
+        //$db = Medoo();
+        //$db->select("test", "*");
 
     }
 }

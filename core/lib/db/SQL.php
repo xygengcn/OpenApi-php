@@ -11,12 +11,12 @@ class SQL
     private $set = " SET ";
     private $from = " FROM ";
     private $space = " ";
-
-    private $key = "*";
     private $where = "";
     private $order = "";
-
+    private $limit = "";
     private $table = "";
+    private $sql = "";
+    private $join = "";
 
     public function __construct($table)
     {
@@ -26,19 +26,28 @@ class SQL
     /**
      * 查询
      */
-    public function select()
+    public function select($arr)
     {
-
-        if (func_get_args() != [[]]) {
-            $this->key = implode(array_reduce(func_get_args(), 'array_merge', array()), ",");
+        if ($this->sql != "") {
+            return $this->sql;
         }
-        return $this->select . $this->key . $this->from . $this->table . $this->where . $this->order;
+        $key = "*";
+        if ($arr != [] && is_array($arr)) {
+            $key = implode($arr, ",");
+        }
+        if (is_string($arr)) {
+            $key = $arr;
+        }
+        return $this->select . $key . $this->from . $this->table . $this->join . $this->where . $this->order . $this->limit;
     }
     /**
      * 插入
      */
     public function insert($data)
     {
+        if ($this->sql != "") {
+            return $this->sql;
+        }
         if ($data != []) {
             foreach ($data as $index) {
                 $keyArr = [];
@@ -77,6 +86,9 @@ class SQL
      */
     public function updata($arr)
     {
+        if ($this->sql != "") {
+            return $this->sql;
+        }
         if ($arr == []) {
             error("updata参数为零");
         }
@@ -100,6 +112,9 @@ class SQL
      */
     public function delete()
     {
+        if ($this->sql != "") {
+            return $this->sql;
+        }
         return $this->delete . $this->table . $this->where;
     }
     /**
@@ -110,18 +125,20 @@ class SQL
         if ($arr == []) {
             error("where参数为零");
         }
-
+        if (is_string($arr)) {
+            $str = $arr;
+        }
         if (is_array($arr[0])) {
             foreach ($arr as $val) {
                 $str[] = $this->stringJoin($val);
             }
             $str = implode($type, $str);
-        } else {
-            if (count($arr) == 3) {
-                $str = $this->stringJoin(func_get_arg(0));
-            } else {
-                error("where参数格式不对");
-            }
+        }
+        if (is_array($arr) && count($arr) == 3) {
+            $str = $this->stringJoin(func_get_arg(0));
+        }
+        if (is_array($arr) && count($arr) != 3) {
+            error("where参数格式不对");
         }
         $this->where = ' WHERE ' . $str;
     }
@@ -139,6 +156,38 @@ class SQL
         if ($arr != []) {
             $this->order = " ORDER BY " . implode(",", $arr);
         }
+
+    }
+    /**
+     * limit
+     */
+    public function limit($arr)
+    {
+        if ($arr != []) {
+            $this->limit = " LIMIT " . implode(",", $arr);
+        }
+
+    }
+    /**
+     * 随机函数
+     */
+    public function rand($limit, $row)
+    {
+
+        $this->join(" AS t1 JOIN (SELECT ROUND(RAND() * ((" . $this->select("MAX(" . str_clean($row) . ")") . ")-(" . $this->select("MIN(" . str_clean($row) . ")") . "))+(" . $this->select("MIN(" . str_clean($row) . ")") . ")) AS id) AS t2");
+        $this->where("t1." . str_clean($row) . ">=t2." . str_clean($row));
+        $this->limit([$limit]);
+        $this->order(["t1." . str_clean($row)]);
+    }
+
+    public function join($sql)
+    {
+        $this->join = $this->space . $sql . $this->space;
+    }
+
+    public function sql($sql)
+    {
+        $this->sql = $sql;
 
     }
 }

@@ -31,7 +31,7 @@ class DB extends \core\lib\db\MySQL
     }
     public function select()
     {
-        //echo $this->sql->select(func_get_args());
+        // echo $this->sql->select(func_get_args());
         return $this->pdoSelect($this->sql->select(func_get_args()));
 
     }
@@ -56,7 +56,7 @@ class DB extends \core\lib\db\MySQL
     }
     public function updata()
     {
-        // echo $this->sql->updata(func_get_args());
+        //echo $this->sql->updata(func_get_args());
         return $this->pdoExec($this->sql->updata(func_get_args()));
     }
 
@@ -64,6 +64,21 @@ class DB extends \core\lib\db\MySQL
     {
 
         $this->sql->order(func_get_args());
+        return $this;
+    }
+    public function limit()
+    {
+        $this->sql->limit(func_get_args());
+        return $this;
+    }
+    public function rand($limit = 1, $row = 'id')
+    {
+        $this->sql->rand($limit, $row);
+        return $this;
+    }
+    public function sql($sql)
+    {
+        $this->sql->sql($sql);
         return $this;
     }
 }

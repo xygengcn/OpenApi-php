@@ -17,14 +17,14 @@ class MySQL
     }
     public function pdoStart()
     {
-        $dsn = $this->db_config["db_Type"] . ":host=" . $this->db_config["host"] . ";dbname=" . $this->db_config["dbName"];
+        $dsn = $this->db_config["database_type"] . ":host=" . $this->db_config["server"] . ":" . $this->db_config["port"] . ";dbname=" . $this->db_config["database_name"];
         try {
-            $pdo = new \pdo($dsn, $this->db_config['userName'], $this->db_config['password']);
+            $pdo = new \pdo($dsn, $this->db_config['username'], $this->db_config['password']);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             error("数据库连接失败: " . $e->getMessage(), $e->getCode());
         }
-        $pdo->query("set names utf8");
+        $pdo->query("set names " . $this->db_config["charset"]);
         return $pdo;
     }
     /**
@@ -163,12 +163,5 @@ class MySQL
         $stmt->execute();
         $this->result = $stmt->fetchAll();
         return $this;
-    }
-    /**
-     * 返回数据
-     */
-    public function get()
-    {
-        return $this->result;
     }
 }

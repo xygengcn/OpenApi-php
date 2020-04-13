@@ -6,8 +6,16 @@ function response($data, $code = 200)
         $error = "data is null";
         error($error);
     }
-    if ($code == 200 && is_string($data) || is_numeric($data) || is_float($data) || is_int($data) && is_array($data)) {
+    if ($code == 200 && is_string($data) || is_numeric($data) || is_float($data) || is_int($data)) {
         echo json_encode(array("code" => $code, "data" => $data));
+        return;
+    }
+    if ($code == 200 && is_array($data)) {
+        if (count($data) == 1) {
+            echo json_encode(array("code" => $code, "data" => $data[0]));
+        } else {
+            echo json_encode(array("code" => $code, "data" => $data));
+        }
         return;
     }
     if ($code == 200 && is_object($data)) {
@@ -62,7 +70,10 @@ function DB($table = null)
         }
     }
     error("数据库表为空");
-
+}
+function Medoo()
+{
+    return new \core\lib\db\Medoo(config("database"));
 }
 /**
  * 时间戳
@@ -114,4 +125,9 @@ function urlParams()
 {
     $urlParam = rtrim(preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']), '/');
     return explode('/', trim($urlParam, '/'));
+}
+//去掉符号
+function str_clean($str)
+{
+    return preg_replace('/[-\',\.\$\^\*-+!\?\/@"\|\\()]/i', "", $str);
 }
