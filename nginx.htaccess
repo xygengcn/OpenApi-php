@@ -7,7 +7,6 @@ location / {
 	if (-f $request_filename/public/index.html){ 
 		rewrite (.*) /public$1/index.html break; 
 	}
-	rewrite ^(.*).php$ /index.php?/$1 last;
 	if (!-e $request_filename) {
 		rewrite ^/(.*)index.html/(.*).md$ /public/$1$2.md break;
 		rewrite ^/(.*).html(.*)$ /public/$1.html$2 break;
