@@ -13,7 +13,7 @@ class route
 
     public function __construct()
     {
-        $this->routes = \core\basic\data::getRoutes();
+        $this->routes = \core\utils\data::getRoutes();
     }
     public static function run($urlParam)
     {
@@ -23,7 +23,7 @@ class route
         for ($i = 0; $i < $count; $i++) {
             $route = "/" . implode("/", $urlParam);
             if ($class = self::isRoute($route)) {
-                return [$class, $param];
+                return [$class, $param, $route];
             }
             array_unshift($param, array_pop($urlParam));
         }

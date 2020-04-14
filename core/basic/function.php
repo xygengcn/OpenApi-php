@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * json输出
+ */
 function response($data, $code = 200)
 {
     if (is_null($data)) {
@@ -25,6 +28,9 @@ function response($data, $code = 200)
     echo json_encode(array("code" => $code, "data" => $data));
 
 }
+/**
+ * 输出
+ */
 function _e($data)
 {
 
@@ -43,38 +49,14 @@ function _e($data)
     echo $data;
 
 }
+/**
+ * 报错输出
+ */
 function error($error = "未知错误", $code = 404)
 {
     die(json_encode(array("code" => $code, "error" => $error)));
 }
-function maps()
-{
-    return require __ROOT__ . "/core/map/map.php";
-}
-function config($configName)
-{
 
-    return \core\basic\data::getConfigs($configName);
-}
-
-/**
- * 数据库操作
- */
-function DB($table = null)
-{
-    if (isset($table) && !empty($table)) {
-        if (is_string($table)) {
-            return new \core\lib\db\DB($table);
-        } else {
-            error("数据库表格式不对");
-        }
-    }
-    error("数据库表为空");
-}
-function Medoo()
-{
-    return new \core\lib\db\Medoo(config("database"));
-}
 /**
  * 时间戳
  */
@@ -100,20 +82,8 @@ function str_suffix($str, $n = 1, $char = " ")
     for ($x = 0; $x < $n; $x++) {$str = $str . $char;}
     return $str;
 }
-/**
- *显示界面，需要在public新建
- */
-function display($html = "index.html")
-{
-    $url = site_url() . '/' . $html;
-    $file = __ROOT__ . '\public\\' . $html;
-    if (file_exists($file)) {
-        header("Location:" . $url);exit;
-    } else {
-        header("Location:" . '\public\error\404.html');exit;
-    }
-}
-//获取域名加协议
+
+//获取服务器域名加协议
 function site_url()
 {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -126,8 +96,19 @@ function urlParams()
     $urlParam = rtrim(preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']), '/');
     return explode('/', trim($urlParam, '/'));
 }
-//去掉符号
+//去掉特殊符号
 function str_clean($str)
 {
     return preg_replace('/[-\',\.\$\^\*-+!\?\/@"\|\\()]/i', "", $str);
+}
+
+//获取来源域名
+function getOriginDomain()
+{
+    if (isset($_SERVER["HTTP_REFERER"])) {
+        return parse_url($_SERVER["HTTP_REFERER"])['host'];
+    } else {
+        return "";
+    }
+
 }

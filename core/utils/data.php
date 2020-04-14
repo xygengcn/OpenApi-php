@@ -1,5 +1,5 @@
 <?php
-namespace core\basic;
+namespace core\utils;
 
 class data
 {

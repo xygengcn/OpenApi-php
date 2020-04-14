@@ -2,9 +2,7 @@
 namespace app\controller;
 
 /**
- * 请保持文件名和类名一致
- *
- * 组件引用use  \app\model\+名字
+ *Bing每日一图
  *
  */
 
@@ -12,14 +10,20 @@ class Bing
 {
     private $url = "https://cn.bing.com/HPImageArchive.aspx?format=js";
 
+    public function __construct()
+    {
+
+    }
+
     public function index()
     {
+
         $str = file_get_contents($this->url . '&idx=0&n=1');
         $str = json_decode($str, true);
         $imgurl = 'http://cn.bing.com' . $str["images"][0]["url"];
         if ($imgurl) {
-            header('Content-Type: image/JPEG');@ob_end_clean();@readfile($imgurl);@flush();@ob_flush();
-            die();
+            $opt = new \core\utils\LoadImage();
+            $opt->create()->load($imgurl);
         } else {
             error('获取图片错误');
         }
