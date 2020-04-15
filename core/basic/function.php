@@ -60,8 +60,12 @@ function error($error = "未知错误", $code = 404)
 /**
  * 时间戳
  */
-function timestamp()
+function timestamp($num = 13)
 {
+    if ($num == 10) {
+        return time();
+    }
+
     list($s1, $s2) = explode(' ', microtime());
     return (float) sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
 }

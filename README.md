@@ -4,7 +4,7 @@
 
 
 
-![](https://img.shields.io/badge/PHP->=7-<blue>.svg) ![](https://img.shields.io/badge/license-MIT-<blue>.svg) ![](https://img.shields.io/badge/Medoo-v1.6-<blue>.svg) ![](https://img.shields.io/badge/MySQL-v1.15.11-<blue>.svg)
+![](https://img.shields.io/badge/PHP->=7-<blue>.svg) ![](https://img.shields.io/badge/license-MIT-<blue>.svg) ![](https://img.shields.io/badge/Medoo-v1.6-<blue>.svg) ![](https://img.shields.io/badge/MySQL-v1.15.11-<blue>.svg)![](https://img.shields.io/badge/Redis-v3.0.0-<blue>.svg)
 
 
 [TOC]
@@ -254,3 +254,80 @@ $db->select("account", "user_name");
 #### 高级用法
 
 [详细操作手册](https://medoo.lvtao.net/1.2/doc.php)
+
+### 内置验证函数
+
+#### 身份验证
+
+#### IP验证
+
+#### 私钥验证
+
+### 全局函数
+
+#### 常量输出
+
+```php
+_e($data);# $data支持数字，字符串，对象，数组，null
+```
+
+#### 接口返回
+
+```php
+response($data,$code=200) #$data支持数字，数组，对象数组，字符串
+    
+{
+    "code": 200,
+    "data": {
+        "id": "807",
+        "tag": "漫画",
+        "origin": "《萤火之森》",
+        "content": "其实美丽的故事都是没有结局的，只因为它没有结局所以才会美丽。",
+        "datetime": "1548230343"
+    }
+}
+```
+
+
+
+#### 错误提示
+
+```php
+//抛出错误，会终止程序运行
+
+error($msg,$code=404); # $msg是错误提示信息，$code是错误代码，默认404
+
+//返回
+{
+    "code": 404,
+    "error": "控制器:\\app\\controller\\one5 未定义文件"
+}
+```
+
+#### 时间戳
+
+``` php
+# 默认返回13位,可以输出10位
+
+timestamp($num =13);
+```
+
+#### 服务器网址
+
+```php
+site_url();//https://xygeng.cn
+```
+
+#### 请求来源域名
+
+```php
+getOriginDomain();#https://api.xygeng.cn
+```
+
+#### 去特殊符号
+
+```php
+#字符串去特殊符号
+str_clean($str);
+```
+

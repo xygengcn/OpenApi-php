@@ -18,7 +18,6 @@ class one
             $this->APIXYGENGCNONE = DB('one')->rand(1)->select("id", "tag", "origin", "content", "datetime");
             $redis->setex("APIXYGENGCNONE", 60 * 60, json_encode($this->APIXYGENGCNONE));
         }
-
     }
 
     public function index()

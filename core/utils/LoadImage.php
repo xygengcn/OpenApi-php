@@ -1,4 +1,10 @@
 <?php
+/*
+ * @Author: xygengcn
+ * @Date: 2020-04-14 19:29:43
+ * @Last Modified by: xygengcn
+ * @Last Modified time: 2020-04-14 19:29:43
+ */
 namespace core\utils;
 
 class LoadImage

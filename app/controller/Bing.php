@@ -1,10 +1,17 @@
 <?php
-namespace app\controller;
+/* File Info
+ * Author: xygengcn
+ * CreateTime: 2020/4/12 下午3:27:00
+ * LastEditor: xygengcn
+ * ModifyTime: 2020/4/14 下午7:26:11
+ * Description:
+ */
 
 /**
  *Bing每日一图
  *
  */
+namespace app\controller;
 
 class Bing
 {
