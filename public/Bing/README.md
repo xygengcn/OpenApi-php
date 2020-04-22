@@ -1,10 +1,12 @@
 ## 每日一图
+为了方便随机切换图片，我们可以使用必应每日一图来参考写出接口，方便我们切换图片和收集图片。全新代码构建，全新界面。
 
+[页面展示](https://api.xygeng.cn/Bing/index.html)
 
 ### 示例
 
 #### 1、效果图
-![bing](http://api.cn/Bing/)
+![bing](https://api.xygeng.cn/Bing/)
 
 #### 2、每日一图
 
@@ -14,7 +16,7 @@
 ```
 ```markdown
 <!-- markdown -->
-![bing](http://api.cn/Bing/)
+![bing](https://api.xygeng.cn/Bing/)
 ```
 
 #### 3、一周七图

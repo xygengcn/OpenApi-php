@@ -6,7 +6,9 @@ class header
 
     public function __construct()
     {
+        
         $this->config = config("header");
+        \core\lib\Check::run();
 
     }
     public static function init()

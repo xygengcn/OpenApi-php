@@ -4,7 +4,7 @@
 
 
 
-![](https://img.shields.io/badge/PHP->=7-<blue>.svg) ![](https://img.shields.io/badge/license-MIT-<blue>.svg) ![](https://img.shields.io/badge/Medoo-v1.6-<blue>.svg) ![](https://img.shields.io/badge/MySQL-v1.15.11-<blue>.svg)![](https://img.shields.io/badge/Redis-v3.0.0-<blue>.svg)
+![](https://img.shields.io/badge/PHP->=7-<blue>.svg) ![](https://img.shields.io/badge/license-MIT-<blue>.svg) ![](https://img.shields.io/badge/Medoo-v1.6-<blue>.svg) ![](https://img.shields.io/badge/MySQL-v1.15.11-<blue>.svg) ![](https://img.shields.io/badge/Redis-v3.0.0-<blue>.svg)
 
 
 [TOC]
