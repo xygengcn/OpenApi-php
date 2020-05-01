@@ -37,6 +37,6 @@ https://api.xygeng.cn/one
 直接在网页上插入下面代码即可
 
 ```html
-<script type="text/javascript" src="https://api.xygeng.cn/one/js/"></script>
+<script type="text/javascript" src="https://api.xygeng.cn/one/get/"></script>
 ```
 

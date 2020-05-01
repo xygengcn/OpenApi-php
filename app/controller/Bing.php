@@ -16,18 +16,19 @@ namespace app\controller;
 class Bing
 {
     private $url = "https://cn.bing.com/HPImageArchive.aspx?format=js";
-
-    public function __construct()
-    {
-
-    }
-
     public function index()
     {
-
-        $str = file_get_contents($this->url . '&idx=0&n=1');
-        $str = json_decode($str, true);
-        $imgurl = 'http://cn.bing.com' . $str["images"][0]["url"];
+        $redis = redis();
+        $APIXYGENGCNBING = $redis->get("APIXYGENGCNBING");
+        if (isset($APIXYGENGCNBING) && !empty($APIXYGENGCNBING)) {
+            $imgurl = $APIXYGENGCNBING;
+        } else {
+            $str = file_get_contents($this->url . '&idx=0&n=1');
+            $str = json_decode($str, true);
+            $imgurl = "http://cn.bing.com" . $str["images"][0]["url"];
+            $expireTime = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
+            $redis->setex("APIXYGENGCNBING", $expireTime - timestamp(10), $imgurl);
+        }
         if ($imgurl) {
             $opt = new \core\utils\LoadImage();
             $opt->create()->load($imgurl);
@@ -37,12 +38,21 @@ class Bing
     }
     public function week()
     {
-        for ($i = 0; $i <= 7; $i++) {
-            $contents = $this->url . '&idx=' . "" . $i . "" . '&n=1';
-            $str = file_get_contents($contents);
-            $str = json_decode($str, true);
-            $imgurl[] = 'http://cn.bing.com' . $str["images"][0]["url"];
+        $redis = redis();
+        $lLen = $redis->lLen("APIBINGWEEK");
+        if ($lLen != 0) {
+            $bingWeek = $redis->lrange('APIBINGWEEK', 0, -1);
+        } else {
+            for ($i = 0; $i <= 7; $i++) {
+                $contents = $this->url . '&idx=' . "" . $i . "" . '&n=1';
+                $str = file_get_contents($contents);
+                $str = json_decode($str, true);
+                $bingWeek[] = 'http://cn.bing.com' . $str["images"][0]["url"];
+                $redis->lpush('APIBINGWEEK', 'http://cn.bing.com' . $str["images"][0]["url"]);
+            }
+            $expireTime = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
+            $redis->expireAt('APIBINGWEEK', $expireTime);
         }
-        response($imgurl);
+        response($bingWeek);
     }
 }

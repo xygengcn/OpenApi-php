@@ -16,7 +16,7 @@ class one
             $this->APIXYGENGCNONE = json_decode($APIXYGENGCNONE, true);
         } else {
             $this->APIXYGENGCNONE = DB('one')->rand(1)->select("id", "tag", "origin", "content", "datetime");
-            $redis->setex("APIXYGENGCNONE", 60 * 60, json_encode($this->APIXYGENGCNONE));
+            $redis->setex("APIXYGENGCNONE", 10 * 60, json_encode($this->APIXYGENGCNONE));
         }
     }
 

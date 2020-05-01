@@ -9,6 +9,7 @@ class AutoLoad
 
         $explode = explode('\\', $name);
         $class = end($explode);
+
         if (isset($_map[$class])) {
             return include_once $_map[$class];
         }
@@ -31,9 +32,8 @@ class AutoLoad
             $file = $name . $ext;
             $path = __ROOT__ . '\\' . $file;
         }
-
+        $path = str_replace('\\', '/', $path);
         if (file_exists($path)) {
-
             return $path;
         }
         return null;

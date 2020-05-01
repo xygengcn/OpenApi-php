@@ -10,6 +10,8 @@ class Controller
     {
         $filename = __ROOT__ . '\app\controller\\' . $controller . '.php';
         $controller = '\app\controller\\' . $controller;
+
+        $filename = str_replace('\\', '/', $filename);
         try {
             if (!file_exists($filename)) {
                 throw new SystemException('控制器:' . $controller . ' 未定义文件', 404);
