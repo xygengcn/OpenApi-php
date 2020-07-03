@@ -1,7 +1,8 @@
 <?php
 namespace core\Exception;
+use \Exception as Exception;
 
-class SystemException extends \Exception
+class SystemException extends Exception
 {
     public function __construct($message, $code = 0, Exception $previous = null)
     {

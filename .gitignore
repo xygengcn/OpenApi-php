@@ -1,1 +1,7 @@
 test.php
+app/controller
+app/model
+app/upload
+app/route
+*.json
+/sql

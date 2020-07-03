@@ -6,6 +6,7 @@ class App
 {
     public static function run()
     {
+        header::init();
         //路由参数
         $urlParam = urlParams();
         //函数参数

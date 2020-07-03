@@ -331,3 +331,12 @@ getOriginDomain();#https://api.xygeng.cn
 str_clean($str);
 ```
 
+#### 爬取函数
+
+```php
+#单条网址爬取,返回字符串
+curl_fetch($url, $cookie = '', $referer = '', $timeout = 10, $ishead = 0)
+
+#多条网址，返回数组
+curl_multi_fetch($urlarr = array(), $timeout = 10)
+```

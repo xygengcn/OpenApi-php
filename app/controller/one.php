@@ -5,7 +5,7 @@ namespace app\controller;
  *一言一句
  */
 
-class one
+class One
 {
     private $APIXYGENGCNONE;
     public function __construct()

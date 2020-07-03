@@ -6,7 +6,7 @@ use \core\Exception\SystemException as SystemException;
 
 class Controller
 {
-    public static function run($controller, $method, $params, $route)
+    public static function run($controller, $method, $params, $route =null)
     {
         $filename = __ROOT__ . '\app\controller\\' . $controller . '.php';
         $controller = '\app\controller\\' . $controller;
@@ -34,12 +34,8 @@ class Controller
         }
         $class = new $controller();
         call_user_func_array(array($class, $method), $params);
-        self::Record($route);
-    }
-    private static function Record($route)
-    {
-        $redis = redis();
-        $record = $redis->get($route);
-        $redis->incr($route);
+        if($route){
+            Monitor::run($route);
+        }
     }
 }

@@ -1,4 +1,10 @@
 <?php
+/**
+ * 自动加载流程
+ * 1、先检查控制器是否存在
+ * 2、检查自定义类
+ * 3、检查全局类
+ */
 //根据类名来include文件
 class AutoLoad
 {
@@ -6,10 +12,8 @@ class AutoLoad
     public static function _autoLoad($name)
     {
         $_map = maps();
-
         $explode = explode('\\', $name);
         $class = end($explode);
-
         if (isset($_map[$class])) {
             return include_once $_map[$class];
         }
@@ -49,4 +53,5 @@ class AutoLoad
         }
     }
 }
+
 spl_autoload_register('AutoLoad::_autoLoad');

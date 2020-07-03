@@ -13,7 +13,7 @@ class route
 
     public function __construct()
     {
-        $this->routes = \core\utils\data::getRoutes();
+        $this->routes = \core\lib\data\route::route();
     }
     public static function run($urlParam)
     {
