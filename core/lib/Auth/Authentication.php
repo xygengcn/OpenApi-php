@@ -22,18 +22,36 @@ class Authentication
                 return 1;
             }
         }
-        error( '没有权限', 500 );
+        error( '没有权限', 50000 );
     }
     public static function AuthSecret() {
 
-        $token = isset( header::getheaders()['Token'] );
-        if ( $token && config( 'secret' ) ) {
-            $token = header::getheaders()['Token'];
-            if ( config( 'secret' ) ===  $token ) {
-                return true;
-            }
+        if ( getDomain() == getOriginDomain() ) {
+            return true;
         }
-        error( '没有权限', 500 );
+
+        if ( isset( header::getheaders()['Token'] ) ) {
+
+            $token = header::getheaders()['Token'];
+
+        } elseif ( isset( $_COOKIE['token'] ) ) {
+
+            $token = $_COOKIE['token'];
+
+        } elseif ( !empty( getParam( 'token' ) ) ) {
+            $token = getParam( 'token' );
+
+        } else {
+
+            $token = null;
+        }
+        $redis = redis();
+
+        if ( $redis->get( 'token_'.$token ) ) {
+
+            return true;
+        }
+        error( '没有权限', 50000 );
     }
 
 }

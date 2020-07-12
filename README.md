@@ -9,7 +9,11 @@
 
 [TOC]
 
-
+### 安装
+1. 直接把工程放到网站
+2. 配置nginx伪静态.htaccess文件【重点】
+3. 把config.inc.php改成config.php【重点】
+4. 配置数据库，redis地址账号密码等【重点】
 
 ### 框架结构
 

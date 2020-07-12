@@ -64,6 +64,7 @@ function redis()
     $config = config( 'redis' );
     $redis->connect( $config['server'], $config['port'] );
     if ( $redis->ping() ) {
+        $redis->select( $config['index'] );
         return $redis;
     } else {
         error( 'Redis连接失败！' );
