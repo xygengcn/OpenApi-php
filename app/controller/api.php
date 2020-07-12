@@ -5,8 +5,10 @@ namespace app\controller;
 class Api {
 
     public function __construct() {
-        //Auth();
-
+        if ( !config( 'monitor' ) ) {
+            error( '未开启监控' );
+        }
+        Auth();
     }
 
     public function total() {

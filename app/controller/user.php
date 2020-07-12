@@ -15,6 +15,7 @@ class User {
         $username = getParam( 'username' );
         $email = getParam( 'email' );
         $password = getParam( 'password' );
+        $timeout = 7200;
         if ( $email && $password ) {
             $user = DB( 'user' )->where( 'email', '=', $email )->select();
             if ( $user == [] ) {
@@ -23,8 +24,11 @@ class User {
             if ( password_verify( $password, $user[0]['password'] ) ) {
                 $redis = redis();
                 $token = password_hash( $user[0]['secret'], PASSWORD_BCRYPT );
-                $redis->setex( 'token_'.$token, 7200, $user[0]['secret'] );
-                response( ['status'=>'success', 'username'=>$user[0]['username'], 'token'=> $token, 'expire'=>7200 ] );
+                if ( config( 'admin' ) == $email ) {
+                    $timeout = 7200*7200;
+                }
+                $redis->setex( 'token_'.$token, $timeout, $user[0]['secret'] );
+                response( ['status'=>'success', 'username'=>$user[0]['username'], 'token'=> $token, 'expire'=>$timeout ] );
                 return;
             } else {
                 error( '密码不正确' );

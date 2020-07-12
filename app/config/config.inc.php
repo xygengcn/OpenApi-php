@@ -3,6 +3,7 @@ if ( !defined( 'IN_SYS' ) ) {
     error( '禁止访问' );
 }
 return [
+    'admin'=>'', //管理账号，可以忽略两个小时的限制
     'secret'=>'', //个人密钥
     'database' =>[
         'database_type' => 'mysql', //只支持mysql
