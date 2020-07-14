@@ -261,11 +261,15 @@ $db->select("account", "user_name");
 
 ### 内置验证函数
 
-#### 身份验证
+#### 本地域名验证
+```php
+Auth("domain");//只能系统请求
+```
+#### token验证
 
-#### IP验证
-
-#### 私钥验证
+```php
+Auth();//函数直接使用，可以用header，cookie，get获取token，验证redis即可
+```
 
 ### 全局函数
 
