@@ -14,6 +14,7 @@ class Api {
     public function total() {
         $redis = redis();
         $total = [];
+        $today_total =[];//今天统计
         $keys = $redis->keys( '*' );
         foreach ( $keys as $key ) {
             if ( strpos( $key, 'total_' ) !== false ) {
@@ -21,8 +22,10 @@ class Api {
                 $route = explode( '_', $route );
                 $name = '/'.implode( '/', $route );
                 $total[$name] = intval( $redis->get( $key ) );
+                $today_total[$name] = $total[$name];
             }
         }
+
         $db = Medoo();
         $data = $db->query( 'SELECT api_name,SUM(total) as total FROM `data` GROUP BY api_name' )->fetchAll();
         if ( $data ) {
@@ -35,7 +38,16 @@ class Api {
 
             }
         }
-        response( $total );
+
+        $history_total =[];//历史统计
+        $data = $db->query( 'SELECT api_name,total,`date` FROM `data` ORDER BY api_name,`date`' )->fetchAll();
+        if ( $data ) {
+            foreach ( $data as $value ) {
+               $history_total[$value['api_name']][$value['date']] =$value['total'];
+            }
+        }
+
+        response( ["total"=>$total,"today" =>$today_total,"history"=>$history_total]);
 
     }
 
