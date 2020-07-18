@@ -51,6 +51,9 @@ return [
     //环境检查
     'check'=>1,
 
+    //开发环境
+    'mode'=>'pro',//dev、pro
+
     //开启监控请求, 需要redis支持，默认关闭
     'monitor'=>0,
 

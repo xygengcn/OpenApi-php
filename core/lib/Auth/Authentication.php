@@ -13,6 +13,10 @@ use \header as header;
 class Authentication
  {
     public static function AuthDomain( $domains = array() ) {
+
+        if(config('mode') == "dev"){
+            return true;
+        }
         if ( !empty( $domains ) ) {
             if ( in_array( getOriginDomain(), $domain ) ) {
                 return 1;
@@ -25,6 +29,10 @@ class Authentication
         error( '没有权限', 50000 );
     }
     public static function AuthSecret() {
+
+        if(config('mode') == "dev"){
+            return true;
+        }
 
         if ( getDomain() == getOriginDomain() ) {
             return true;
@@ -51,7 +59,7 @@ class Authentication
 
             return true;
         }
-        error( '没有权限', 50000 );
+        error( '没有权限', 50001 );
     }
 
 }

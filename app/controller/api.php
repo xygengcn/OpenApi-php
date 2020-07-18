@@ -27,7 +27,7 @@ class Api {
         }
 
         $db = Medoo();
-        $data = $db->query( 'SELECT api_name,SUM(total) as total FROM `data` GROUP BY api_name' )->fetchAll();
+        $data = $db->query( 'SELECT api_name,SUM(total) as total FROM `data` GROUP BY api_name ORDER BY total DESC' )->fetchAll();
         if ( $data ) {
             foreach ( $data as $value ) {
                 if ( isset( $total[$value['api_name']] ) ) {
@@ -40,13 +40,12 @@ class Api {
         }
 
         $history_total =[];//历史统计
-        $data = $db->query( 'SELECT api_name,total,`date` FROM `data` ORDER BY api_name,`date`' )->fetchAll();
+        $data = $db->query( "SELECT api_name,total,`date` FROM `data` WHERE `type` != 'total'  ORDER BY api_name,`date`" )->fetchAll();
         if ( $data ) {
             foreach ( $data as $value ) {
                $history_total[$value['api_name']][$value['date']] =$value['total'];
             }
         }
-
         response( ["total"=>$total,"today" =>$today_total,"history"=>$history_total]);
 
     }
