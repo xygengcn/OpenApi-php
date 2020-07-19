@@ -11,10 +11,15 @@ class Api {
         Auth();
     }
 
+    public function index() {
+        \display( 'api\index.html' );
+    }
+
     public function total() {
         $redis = redis();
         $total = [];
-        $today_total =[];//今天统计
+        $today_total = [];
+        //今天统计
         $keys = $redis->keys( '*' );
         foreach ( $keys as $key ) {
             if ( strpos( $key, 'total_' ) !== false ) {
@@ -39,14 +44,15 @@ class Api {
             }
         }
 
-        $history_total =[];//历史统计
+        $history_total = [];
+        //历史统计
         $data = $db->query( "SELECT api_name,total,`date` FROM `data` WHERE `type` != 'total'  ORDER BY api_name,`date`" )->fetchAll();
         if ( $data ) {
             foreach ( $data as $value ) {
-               $history_total[$value['api_name']][$value['date']] =$value['total'];
+                $history_total[$value['api_name']][$value['date']] = $value['total'];
             }
         }
-        response( ["total"=>$total,"today" =>$today_total,"history"=>$history_total]);
+        response( ['total'=>$total, 'today' =>$today_total, 'history'=>$history_total] );
 
     }
 

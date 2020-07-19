@@ -267,6 +267,8 @@ Auth("domain");//只能系统请求
 ```
 #### token验证
 
+如果接口出现没有权限，基本来自没有token验证，需要用户登录注册
+
 ```php
 Auth();//函数直接使用，可以用header，cookie，get获取token，验证redis即可
 ```
