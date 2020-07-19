@@ -20,7 +20,7 @@ class One {
     }
 
     public function index() {
-        response( $this->api_one );
+        response( ...$this->api_one );
     }
 
     public function get() {
