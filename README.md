@@ -350,3 +350,41 @@ curl_fetch($url, $cookie = '', $referer = '', $timeout = 10, $ishead = 0)
 #多条网址，返回数组
 curl_multi_fetch($urlarr = array(), $timeout = 10)
 ```
+
+
+### 返回代码
+
+#### 200
+
+成功返回
+
+```json
+{
+    "code": 200,
+    "data": {
+        ....
+    }
+}
+```
+
+#### 404
+
+接口失败返回
+
+```json
+{
+    "code": 404,
+    "error": ""//错误提示
+}
+```
+
+#### 777
+
+没有权限
+
+```json
+{
+    "code": 777,
+    "error": "没有权限"//具体权限说明
+}
+```

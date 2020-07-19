@@ -15,11 +15,8 @@ function response( $data, $code = 200 )
         return;
     }
     if ( $code == 200 && is_array( $data ) ) {
-        if ( count( $data ) == 1 ) {
-            echo json_encode( array( 'code' => $code, 'data' => $data[0] ) );
-        } else {
-            echo json_encode( array( 'code' => $code, 'data' => $data ) );
-        }
+
+        echo json_encode( array( 'code' => $code, 'data' => $data ) );
         return;
     }
     if ( $code == 200 && is_object( $data ) ) {

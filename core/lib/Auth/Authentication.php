@@ -14,7 +14,7 @@ class Authentication
  {
     public static function AuthDomain( $domains = array() ) {
 
-        if(config('mode') == "dev"){
+        if ( config( 'mode' ) == 'dev' ) {
             return true;
         }
         if ( !empty( $domains ) ) {
@@ -26,11 +26,11 @@ class Authentication
                 return 1;
             }
         }
-        error( '没有权限', 50000 );
+        error( '没有权限', 777 );
     }
     public static function AuthSecret() {
 
-        if(config('mode') == "dev"){
+        if ( config( 'mode' ) == 'dev' ) {
             return true;
         }
 
@@ -59,7 +59,7 @@ class Authentication
 
             return true;
         }
-        error( '没有权限', 50001 );
+        error( '没有权限', 777 );
     }
 
 }

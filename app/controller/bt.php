@@ -15,7 +15,11 @@ class BT {
 
     public function index( $api ) {
         $bt = new model( config( 'bt' )['api'], config( 'bt' )['key'] );
-        response( call_user_func( [$bt, $api] ) );
+        $data = call_user_func( [$bt, $api] );
+        if ( array_key_exists( 'status', $data ) && $data['status'] == false ) {
+            error( $data['msg'] );
+        }
+        response( $data );
     }
 
 }
