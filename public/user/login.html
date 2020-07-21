@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XY注册中心</title>
+    <title>XY登录中心</title>
     <meta name="apple-mobile-web-app-title" content="XY笔记">
     <link rel="apple-touch-icon-precomposed" sizes="180x180">
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <style>
         body,
         html {
@@ -108,19 +109,15 @@
         <div class="body">
             <form class="form">
                 <div class="form-item">
-                    <input type="text" autocomplete="off" placeholder="名称（3-30字符之间）" class="input__inner"
-                        name="username" id="username" size="30" minlength="3">
-                </div>
-                <div class="form-item">
                     <input type="email" autocomplete="off" placeholder="邮箱" class="input__inner" name="email"
                         id="email">
                 </div>
                 <div class="form-item" labe="">
-                    <input type="password" autocomplete="off" placeholder="密码（8位以上大小写加数字）" class="input__inner"
-                        name="password" id="password">
+                    <input type="password" autocomplete="off" placeholder="密码" class="input__inner" name="password"
+                        id="password">
                 </div>
                 <div class="form-item">
-                    <input type="button" class="button" value="GO" id="reg" />
+                    <input type="button" class="button" value="GO" id="login" />
                 </div>
             </form>
         </div>
@@ -132,23 +129,18 @@
             var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return RegExp(reg).test(value);
         }
-        function validatorName(value) {
-            return value.length >= 3 && value.length < 30
-        }
         function validatorPassword(value) {
             reg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,150}$/;
             return RegExp(reg).test(value);
         }
-        $("#reg").click(() => {
-            var username = $("#username").val();
+        $("#login").click(() => {
             var email = $("#email").val();
             var password = $("#password").val();
-            console.log(username, email, password)
-            if (validatorEmail(email) && validatorName(username) && validatorPassword(password)) {
-                $.post("../user/reg", { username, password, email }, function (result) {
+            if (validatorEmail(email) && validatorPassword(password)) {
+                $.post("../user/login", { password, email }, function (result) {
                     if (result.code == 200) {
-                        alert(result.data);
-                        window.location.href = "./login.html";
+                        $.cookie('token', result.data.token, { expires: result.data.expire, path: '/' });
+                        window.location.href = "./user.html";
                     } else {
                         alert(result.error);
                     }
@@ -157,15 +149,6 @@
                 alert("不符合命名规则")
             }
         })
-        $("#username").blur(function () {
-            if (validatorName(this.value)) {
-                console.log("符合命名规则");
-                $(this).css("border-color", "#20a53a");
-            } else {
-                console.log("不符合命名规则");
-                $(this).css("border-color", "red");
-            }
-        });
 
         $("#email").blur(function () {
             if (validatorEmail(this.value)) {
