@@ -94,6 +94,9 @@ function str_suffix($str, $n = 1, $char = ' ')
 
 function getParam($key)
 {
+    if (@$_COOKIE[$key]) {
+        return $_COOKIE[$key];
+    }
     if (@$_GET[$key]) {
         return $_GET[$key];
     }

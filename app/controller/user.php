@@ -18,7 +18,11 @@ class User
     {
         $email = getParam('email');
         $password = getParam('password');
+        $code = getParam('code');
         $timeout = 7200;
+        if (config('admin') == $email) {
+            $timeout = 7200 * 7200;
+        }
         if ($email && $password) {
             $user = DB('user')->where('email', '=', $email)->select();
             if ($user == []) {
@@ -27,14 +31,19 @@ class User
             if (password_verify($password, $user[0]['password'])) {
                 $redis = redis();
                 $token = password_hash($user[0]['secret'], PASSWORD_BCRYPT);
-                if (config('admin') == $email) {
-                    $timeout = 7200 * 7200;
-                }
                 $redis->setex('token_' . $token, $timeout, getDevice()['device']);
                 response(['status' => 'success', 'username' => $user[0]['username'], 'token' => $token, 'expire' => $timeout]);
                 return;
             } else {
                 error('密码不正确');
+            }
+        } else if ($code && $email) {
+            $redis = redis();
+            if ($redis->hKeys('verify_' . $code)) {
+                $user = $redis->hMget('verify_' . $code, ['username', 'token']);
+                response(['status' => 'success', 'username' => $user['username'], 'token' => $user['token'], 'expire' => $timeout]);
+            } else {
+                error('验证码过期');
             }
         } else {
             error('参数缺失');
@@ -47,6 +56,9 @@ class User
         $username = getParam('username');
         $email = getParam('email');
         $password = getParam('password');
+        if (empty($username) || empty($email) || empty($password)) {
+            error("参数不完整");
+        }
         $user = DB('user')->where('email', '=', $email)->select();
         if ($user != []) {
             error('已注册用户');
@@ -58,6 +70,32 @@ class User
             response('注册成功');
         } else {
             error('注册失败');
+        }
+    }
+
+    public function verify()
+    {
+        $email = getParam('email');
+        $username = getParam('username');
+        $password = getParam('password');
+        $token = getParam("token");
+        if ($email && $password) {
+            $user = DB('user')->where('email', '=', $email)->select();
+            if ($user == []) {
+                error('未注册用户！');
+            }
+            if (password_verify($password, $user[0]['password'])) {
+                $verify_code = rand(1000, 9999);
+                $redis = redis();
+                $redis->hMset('verify_' . $verify_code, ['username' =>  $username, 'token' => $token]);
+                $redis->expire('verify_' . $verify_code, 30);
+                response(["code" => $verify_code, "email" => $email, 'username' =>  $username, 'token' => $token]);
+                return;
+            } else {
+                error('验证错误');
+            }
+        } else {
+            error('参数缺失');
         }
     }
 

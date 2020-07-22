@@ -29,7 +29,7 @@ class Authentication
                 return 1;
             }
         }
-        error('没有域名权限', 777);
+        error('没有域名权限', 700);
     }
 
     public static function AuthIP()
@@ -41,7 +41,7 @@ class Authentication
         if (getIP() == $_SERVER['SERVER_ADDR']) {
             return true;
         }
-        error('没有IP权限', 777);
+        error('没有IP权限', 701);
     }
     public static function AuthSecret()
     {
@@ -72,8 +72,8 @@ class Authentication
             if ($device == getDevice()['device']) {
                 return;
             }
-            error('没有设备权限', 777);
+            error('没有设备权限', 703);
         }
-        error('没有token权限', 777);
+        error('没有token权限', 702);
     }
 }
