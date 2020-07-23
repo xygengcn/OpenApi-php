@@ -108,7 +108,19 @@ function getParam($key)
     }
     return null;
 }
+function getToken()
+{
+    if (isset(header::getheaders()['Token'])) {
+        return header::getheaders()['Token'];
+    } elseif (isset($_COOKIE['token'])) {
 
+        return $_COOKIE['token'];
+    } elseif (!empty(getParam('token'))) {
+        return getParam('token');
+    } else {
+        return null;
+    }
+}
 //获取服务器域名加协议
 
 function site_url()

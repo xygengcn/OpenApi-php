@@ -53,27 +53,19 @@ class Authentication
         if (getDomain() == getOriginDomain()) {
             return true;
         }
-
-        if (isset(header::getheaders()['Token'])) {
-
-            $token = header::getheaders()['Token'];
-        } elseif (isset($_COOKIE['token'])) {
-
-            $token = $_COOKIE['token'];
-        } elseif (!empty(getParam('token'))) {
-            $token = getParam('token');
-        } else {
-
-            $token = null;
+        $token = getToken();
+        if (!$token) {
+            error('没有token权限', 702);
         }
         $redis = redis();
 
         if ($device = $redis->get('token_' . $token)) {
-            if ($device == getDevice()['device']) {
-                return;
-            }
-            error('没有设备权限', 703);
+            // if ($device == getDevice()['device']) {
+            //     return;
+            // }
+            // error('没有设备权限', 703);
+            return;
         }
-        error('没有token权限', 702);
+        error('token过期', 704);
     }
 }

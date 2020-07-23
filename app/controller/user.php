@@ -78,7 +78,7 @@ class User
         $email = getParam('email');
         $username = getParam('username');
         $password = getParam('password');
-        $token = getParam("token");
+        $token = getToken();
         if ($email && $password) {
             $user = DB('user')->where('email', '=', $email)->select();
             if ($user == []) {
