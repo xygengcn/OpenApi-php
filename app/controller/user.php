@@ -32,7 +32,7 @@ class User
                 $redis = redis();
                 $token = password_hash($user[0]['secret'], PASSWORD_BCRYPT);
                 $redis->setex('token_' . $token, $timeout, getDevice()['device']);
-                response(['status' => 'success', 'username' => $user[0]['username'], 'token' => $token, 'expire' => $timeout]);
+                response(['status' => 'success', 'username' => $user[0]['username'], 'email' => $email, 'token' => $token, 'expire' => $timeout]);
                 return;
             } else {
                 error('密码不正确');
@@ -41,9 +41,9 @@ class User
             $redis = redis();
             if ($redis->hKeys('verify_' . $code)) {
                 $user = $redis->hMget('verify_' . $code, ['username', 'token']);
-                response(['status' => 'success', 'username' => $user['username'], 'token' => $user['token'], 'expire' => $timeout]);
+                response(['status' => 'success', 'username' => $user['username'], 'email' => $email,  'token' => $user['token'], 'expire' => $timeout]);
             } else {
-                error('验证码过期');
+                error('安全码过期');
             }
         } else {
             error('参数缺失');
@@ -71,6 +71,20 @@ class User
         } else {
             error('注册失败');
         }
+    }
+
+    public function logout()
+    {
+        $token = getToken();
+        if ($token) {
+            $redis = redis();
+            if ($redis->get('token_' . $token)) {
+                $redis->del('token_' . $token);
+            }
+            response("success");
+            return;
+        }
+        error("error");
     }
 
     public function verify()
