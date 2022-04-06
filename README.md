@@ -1,5 +1,7 @@
 ## OpenApi
 
+### 从2022年4月起，此接口将会从php转向nodejs继续开发，php项目将不会再更新，新的项目[地址](https://github.com/xygengcn/koa-api)
+
 开源api系统，将会汇集搜集开源的所有api接口，个人开发简版操作
 
 
